@@ -229,7 +229,16 @@ async function loadEager(doc) {
   if (main) {
     decorateMain(main);
     document.body.classList.add('appear');
-    await loadSection(main.querySelector('.section'), waitForFirstImage);
+    // Hint the browser to fetch the likely LCP image (first image of the first
+    // section) at high priority. aem.js already flips it to loading=eager in
+    // waitForFirstImage; adding fetchpriority pulls its request forward, which
+    // helps mobile LCP on plain-image hero pages (article/adventure detail).
+    const firstSection = main.querySelector('.section');
+    const lcpImg = firstSection && firstSection.querySelector('img');
+    if (lcpImg && !lcpImg.getAttribute('fetchpriority')) {
+      lcpImg.setAttribute('fetchpriority', 'high');
+    }
+    await loadSection(firstSection, waitForFirstImage);
   }
 
   try {
