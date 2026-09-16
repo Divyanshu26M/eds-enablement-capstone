@@ -52,13 +52,17 @@ header nav a:any-link {
 /* ---------- hamburger (mobile only) ---------- */
 header nav .nav-hamburger {
   grid-area: hamburger;
-  height: 22px;
+  min-height: 24px;
   display: flex;
   align-items: center;
 }
 
 header nav .nav-hamburger button {
-  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
   margin: 0;
   border: 0;
   border-radius: 0;
