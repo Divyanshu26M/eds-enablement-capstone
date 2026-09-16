@@ -1,0 +1,51 @@
+.tabs-minimal-dark-withimg-4 .tabs-minimal-dark-withimg-4-list {
+  display: flex;
+  gap: 0;
+  max-width: 100%;
+  font-size: var(--body-font-size-xs);
+  overflow-x: auto;
+}
+
+.tabs-minimal-dark-withimg-4 .tabs-minimal-dark-withimg-4-list button {
+  flex: 0 0 max-content;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 12px 20px;
+  background-color: var(--light-color);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: unset;
+  text-align: initial;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tabs-minimal-dark-withimg-4 .tabs-minimal-dark-withimg-4-list button p {
+  margin: 0;
+}
+
+.tabs-minimal-dark-withimg-4 .tabs-minimal-dark-withimg-4-list button[aria-selected='true'] {
+  background-color: var(--text-color);
+  color: #fff;
+  cursor: initial;
+}
+
+.tabs-minimal-dark-withimg-4 .tabs-minimal-dark-withimg-4-panel {
+  margin-top: 0;
+  padding: 24px 0;
+  overflow: auto;
+}
+
+.tabs-minimal-dark-withimg-4 .tabs-minimal-dark-withimg-4-panel[aria-hidden='true'] {
+  display: none;
+}
+
+.tabs-minimal-dark-withimg-4 .tabs-minimal-dark-withimg-4-panel img {
+  max-width: 100%;
+  height: auto;
+}

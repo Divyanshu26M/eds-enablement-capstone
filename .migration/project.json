@@ -1,0 +1,14 @@
+{
+  "type": "da",
+  "sites": {
+    "eds-enablement-capstone": {
+      "previewOrg": "divyanshu26m",
+      "previewSite": "eds-enablement-capstone",
+      "contentHostUrl": "https://content.da.live/divyanshu26m/eds-enablement-capstone/",
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
+    }
+  },
+  "features": [
+    "site-planning"
+  ]
+}

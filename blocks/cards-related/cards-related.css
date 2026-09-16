@@ -1,0 +1,23 @@
+.cards-related ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cards-related .cards-related-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--medium-color);
+}
+
+.cards-related .cards-related-item a {
+  font-family: var(--body-font-family);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.cards-related .cards-related-item a:hover {
+  text-decoration: underline;
+}

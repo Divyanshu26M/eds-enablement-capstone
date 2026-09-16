@@ -1,0 +1,20 @@
+.columns-metadata dl {
+  margin: 0;
+}
+
+.columns-metadata .columns-metadata-label {
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--medium-color);
+  font-size: var(--body-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #888;
+}
+
+.columns-metadata .columns-metadata-value {
+  margin: 4px 0 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}

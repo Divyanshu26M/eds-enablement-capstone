@@ -1,20 +1,153 @@
+/* ============================================================
+   WKND footer — dark bar with logo, nav, social icons, legal.
+   Mobile-first (min-width only). Breakpoint: 900px.
+   ============================================================ */
+
 footer {
-  background-color: var(--light-color);
+  background-color: var(--footer-background);
+  color: var(--footer-text-color);
+  font-family: var(--body-font-family);
   font-size: var(--body-font-size-xs);
 }
 
-footer .footer > div {
+footer .footer {
+  max-width: var(--content-max-width);
   margin: auto;
-  max-width: 1200px;
   padding: 40px 24px 24px;
 }
 
-footer .footer p {
-  margin: 0;
+footer .footer a:any-link {
+  color: var(--footer-text-color);
+  text-decoration: none;
 }
 
+footer .footer a:hover {
+  text-decoration: underline;
+}
+
+footer .footer p {
+  margin: 0 0 12px;
+}
+
+/* ---------- brand: logo + footer nav ---------- */
+footer .footer-brand img {
+  width: 128px;
+  height: auto;
+}
+
+footer .footer-brand ul {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+footer .footer-brand li {
+  margin: 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* WKND footer hides "Home" — the logo is the home link */
+footer .footer-brand ul > li:first-child {
+  display: none;
+}
+
+/* ---------- social: Follow Us + icons ---------- */
+footer .footer-social {
+  margin-top: 24px;
+}
+
+footer .footer-social h4 {
+  margin: 0 0 12px;
+  color: var(--footer-text-color);
+  font-family: var(--body-font-family);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: var(--body-font-size-xs);
+}
+
+footer .footer-social ul {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer .footer-social .social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+footer .footer-social .social-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+footer .footer-social .social-icon:hover {
+  opacity: 0.7;
+}
+
+/* ---------- legal: copyright + disclaimer ---------- */
+footer .footer-legal {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgb(255 255 255 / 15%);
+  font-size: 12px;
+  line-height: 1.6;
+  color: #b0b0b0;
+}
+
+footer .footer-legal a:any-link {
+  color: #b0b0b0;
+  text-decoration: underline;
+}
+
+/* ============================================================
+   Desktop (>= 900px): brand row (logo left, nav + social right)
+   with legal text below.
+   ============================================================ */
 @media (width >= 900px) {
-  footer .footer > div {
+  footer .footer {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'brand social'
+      'legal legal';
+    align-items: center;
+    column-gap: 40px;
     padding: 40px 32px 24px;
+  }
+
+  footer .footer-brand {
+    grid-area: brand;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  /* footer nav renders as a horizontal inline row beside the logo */
+  footer .footer-brand ul {
+    display: flex;
+    gap: 24px;
+    margin: 0;
+  }
+
+  footer .footer-brand li {
+    margin: 0;
+  }
+
+  footer .footer-social {
+    grid-area: social;
+    margin-top: 0;
+  }
+
+  footer .footer-legal {
+    grid-area: legal;
+    margin-top: 24px;
   }
 }

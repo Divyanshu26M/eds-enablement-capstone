@@ -1,0 +1,16 @@
+{
+  "variantName": "quote",
+  "baseBlock": "quote",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {},
+  "contentPattern": {},
+  "usage": {
+    "pagesUsing": [
+      "/us/en/magazine/arctic-surfing"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-16T14:39:08.891710Z"
+  },
+  "options": [],
+  "memberVariantIds": []
+}

@@ -1,0 +1,53 @@
+.accordion details {
+  border-bottom: 1px solid #dadada;
+}
+
+.accordion details:first-of-type {
+  border-top: 1px solid #dadada;
+}
+
+.accordion details p {
+  margin-bottom: 0.8em;
+}
+
+.accordion details summary {
+  position: relative;
+  padding: 20px 46px 20px 0;
+  cursor: pointer;
+  list-style: none;
+  overflow: auto;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: var(--body-font-size-xs);
+  transition: color 0.2s;
+}
+
+.accordion details summary:focus,
+.accordion details summary:hover {
+  color: #000;
+}
+
+.accordion details summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion details summary::after {
+  content: '+';
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.accordion details[open] summary::after {
+  content: '−';
+}
+
+.accordion details .accordion-item-body {
+  padding: 0 0 20px;
+}

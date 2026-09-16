@@ -1,0 +1,6 @@
+@import url('../tabs/tabs.css');
+
+.tabs-minimal-light .tabs-panel img {
+  max-width: 100%;
+  height: auto;
+}
