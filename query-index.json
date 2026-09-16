@@ -1,0 +1,202 @@
+{
+  "total": 21,
+  "offset": 0,
+  "limit": 21,
+  "data": [
+    {
+      "path": "/us/en/adventures/bali-surf-camp",
+      "title": "Bali Surf Camp",
+      "image": "https://wknd.site/us/en/adventures/bali-surf-camp/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323792187/adobestock-175749320.jpeg",
+      "description": "Surfing in Bali is on the bucket list of every surfer - whether you're a beginner or someone who's been surfing for decades, there will be a break to cater to your ability. Bali offers warm water, tropical vibes, awesome breaks and low cost expenses.",
+      "template": "adventure-detail",
+      "category": "Surfing",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/beervana-portland",
+      "title": "Beervana in Portland",
+      "image": "https://wknd.site/us/en/adventures/beervana-portland/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323790531/adobestock-200192344.jpeg",
+      "description": "This adventure will provide insider access to spectacular local breweries that define the taste and experience of Oregon beer culture and tradition.",
+      "template": "adventure-detail",
+      "category": "Travel",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/climbing-new-zealand",
+      "title": "Climbing New Zealand",
+      "image": "https://wknd.site/us/en/adventures/climbing-new-zealand/_jcr_content/root/container/carousel/item_1571266094599.coreimg.jpeg/1660323785724/sport-climbing.jpeg",
+      "description": "Let us help you make your New Zealand climbing vacation a memory you will cherish forever! Come join us for a guided rock climbing adventure in the mountains that trained Sir Edmund Hilary.",
+      "template": "adventure-detail",
+      "category": "Climbing",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/colorado-rock-climbing",
+      "title": "Colorado Rock Climbing",
+      "image": "https://wknd.site/us/en/adventures/colorado-rock-climbing/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323789363/adobestock-201222633.jpeg",
+      "description": "With all of Colorado's beautiful peaks, rock formations and gorgeous mountain views, it's not hard for rock climbers to find a little slice of climbing paradise nearly everywhere they go. On this tour we'll take you to the top parks in Colorado so you can experience the diverse climbing landscape that has made Colorado a goto destination for rock climbers from around the world.",
+      "template": "adventure-detail",
+      "category": "Climbing",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/cycling-southern-utah",
+      "title": "Cycling Southern Utah",
+      "image": "https://wknd.site/us/en/adventures/cycling-southern-utah/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323777766/adobestock-185324648.jpeg",
+      "description": "Join us as we explore the rugged, stunningly gorgeous landscape of southern Utah. Touch your soul as we ride through red rock canyons and sandstone cliffs in Bryce Canyon and Zion National Park, two of Utah's iconic national parks. These parks provide a stunning backdrop for a once in a lifetime cycling vacation.",
+      "template": "adventure-detail",
+      "category": "Cycling",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/cycling-tuscany",
+      "title": "Cycling Tuscany",
+      "image": "https://wknd.site/us/en/adventures/cycling-tuscany/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323789294/adobestock-59459597.jpeg",
+      "description": "Visiting Tuscany on a bicycle is about experiencing the old world charm of Italy on your own terms.",
+      "template": "adventure-detail",
+      "category": "Cycling",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/downhill-skiing-wyoming",
+      "title": "Downhill Skiing Wyoming",
+      "image": "https://wknd.site/us/en/adventures/downhill-skiing-wyoming/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323784078/adobestock-185234795.jpeg",
+      "description": "A skiers paradise far from crowds and close to nature with terrain so vast it appears uncharted. With 2,500 acres of legendary terrain, unmatched levels of snowfall each winter, and unparalleled backcountry access, Jackson Hole offers a truly unique skiing experience.",
+      "template": "adventure-detail",
+      "category": "Skiing",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/gastronomic-marais-tour",
+      "title": "Gastronomic Marais Tour",
+      "image": "https://wknd.site/us/en/adventures/gastronomic-marais-tour/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323786247/adobestock-294203896.jpeg",
+      "description": "Take a VIP gastronomic tour through the vibrant Marais, one of the oldest, colorful and historical areas of Paris. Our Marais expert, Marie Bernard will take food lovers to the top food shops, patisseries and chocolate shops as you take in Marais' unique atmosphere.",
+      "template": "adventure-detail",
+      "category": "Travel",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/napa-wine-tasting",
+      "title": "Napa Wine Tasting",
+      "image": "https://wknd.site/us/en/adventures/napa-wine-tasting/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323791204/adobestock-280313729.jpeg",
+      "description": "Enjoy spectacular wine tasting in the Napa Valley.",
+      "template": "adventure-detail",
+      "category": "Travel",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/riverside-camping-australia",
+      "title": "Riverside Camping",
+      "image": "https://wknd.site/us/en/adventures/riverside-camping-australia/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323783461/adobe-waadobe-wa-mg-2466.jpeg",
+      "description": "Siegel River Australia",
+      "template": "adventure-detail",
+      "category": "Travel",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/ski-touring-mont-blanc",
+      "title": "Ski Touring Mont Blanc",
+      "image": "https://wknd.site/us/en/adventures/ski-touring-mont-blanc/_jcr_content/root/container/carousel/item_1571168419252.coreimg.jpeg/1660323789507/adobestock-238230356.jpeg",
+      "description": "This adventure includes 5 days of ski touring topped off with the ascent of Mont Blanc, the highest point in Western Europe.",
+      "template": "adventure-detail",
+      "category": "Skiing",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/surf-camp-costa-rica",
+      "title": "Surf Camp in Costa Rica",
+      "image": "https://wknd.site/us/en/adventures/surf-camp-costa-rica/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323786122/adobestock-278302117.jpeg",
+      "description": "Costa Rica is the ideal location for a first surf trip. It is a safe place to travel and the locals are quite friendly and happy to see other surfers.",
+      "template": "adventure-detail",
+      "category": "Surfing",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/tahoe-skiing",
+      "title": "Tahoe Skiing",
+      "image": "https://wknd.site/us/en/adventures/tahoe-skiing/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323785476/adobestock-184591344.jpeg",
+      "description": "Great weather, crystal clear lake water, and a relaxed California attitude make Lake Tahoe one of the most desirable ski destinations in the world. Few ski areas rival Lake Tahoe for its excellent snow conditions, challenging terrain and state-of-the-art lift chairs. Lake Tahoe is home to dozens of resorts and we'll be your guide for the best of them.",
+      "template": "adventure-detail",
+      "category": "Skiing",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/west-coast-cycling",
+      "title": "West Coast Cycling",
+      "image": "https://wknd.site/us/en/adventures/west-coast-cycling/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323786740/adobestock-151584995.jpeg",
+      "description": "Join us for this once in a lifetime bike trip traveling from San Francisco to Portland cycling along the Pacific Coast. Experience world class terrain as we head north through redwood forests, state parks, the Columbia river and the Pacific ocean.",
+      "template": "adventure-detail",
+      "category": "Cycling",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/whistler-mountain-biking",
+      "title": "Whistler Mountain Biking",
+      "image": "https://wknd.site/us/en/adventures/whistler-mountain-biking/_jcr_content/root/container/carousel/item_1572023290053.coreimg.jpeg/1660323790235/adobestock-122578479.jpeg",
+      "description": "Whistler is often considered North America\u2019s preeminent mountain bike destination. Let us show you why.",
+      "template": "adventure-detail",
+      "category": "Cycling",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/adventures/yosemite-backpacking",
+      "title": "Yosemite Backpacking",
+      "image": "https://wknd.site/us/en/adventures/yosemite-backpacking/_jcr_content/root/container/carousel/image.coreimg.jpeg/1660323790695/adobestock-231698835.jpeg",
+      "description": "Yosemite National Park, designated a World Heritage Site in 1984, is best known for its granite cliffs, waterfalls and giant sequoias, but within its nearly 1,200 square miles, you can find deep valleys, grand meadows, glaciers and lakes. The majority of visitors spend their time in the Yosemite Valley, which we'll also explore, but on this trip we'll take you to the backcountry that inspired John Muir to lead a movement to have Congress establish Yosemite as we know it today.",
+      "template": "adventure-detail",
+      "category": "Travel",
+      "lastModified": "1660000000"
+    },
+    {
+      "path": "/us/en/magazine/arctic-surfing",
+      "title": "Arctic Surfing",
+      "image": "https://wknd.site/us/en/magazine/arctic-surfing/_jcr_content/root/container/image.coreimg.jpeg/1660323783968/surfer-back-from-the-ocean.jpeg",
+      "description": "We traveled to Northern Norway to document the joy of surfing in extreme, but breathtakingly beautiful conditions.",
+      "template": "article-detail",
+      "category": "Magazine",
+      "lastModified": "1660000000",
+      "date": "2020-07-09"
+    },
+    {
+      "path": "/us/en/magazine/san-diego-surf",
+      "title": "San Diego Surf Spots",
+      "image": "https://wknd.site/us/en/magazine/san-diego-surf/_jcr_content/root/container/image.coreimg.jpeg/1660323822923/beach-walking.jpeg",
+      "description": "Best beach breaks",
+      "template": "article-detail",
+      "category": "Magazine",
+      "lastModified": "1660000000",
+      "date": "2020-07-09"
+    },
+    {
+      "path": "/us/en/magazine/ski-touring",
+      "title": "Ski Touring",
+      "image": "https://wknd.site/us/en/magazine/ski-touring/_jcr_content/root/container/image.coreimg.jpeg/1660323790419/skitouring1sjoeberg.jpeg",
+      "description": "Learn about our ski touring experience and how it differs from traditional downhill skiing and even backcountry skiing.",
+      "template": "article-detail",
+      "category": "Magazine",
+      "lastModified": "1660000000",
+      "date": "2020-09-30"
+    },
+    {
+      "path": "/us/en/magazine/guide-la-skateparks",
+      "title": "Ultimate Guide to LA Skateparks",
+      "image": "https://wknd.site/us/en/magazine/guide-la-skateparks/_jcr_content/root/container/image.coreimg.png/1660323783402/article-01-hero.png",
+      "description": "Breaking down the top skate destinations in all of Los Angeles. You don't want to miss this!",
+      "template": "article-detail",
+      "category": "Magazine",
+      "lastModified": "1660000000",
+      "date": "2020-09-30"
+    },
+    {
+      "path": "/us/en/magazine/western-australia",
+      "title": "Western Australia",
+      "image": "https://wknd.site/us/en/magazine/western-australia/_jcr_content/root/container/image.coreimg.jpeg/1660323792132/adobestock-156407519.jpeg",
+      "description": "The Australian West coast is a camper's heaven. Endless miles of desert roads leading to secret beaches, vast canyons and crystal clear rivers.",
+      "template": "article-detail",
+      "category": "Magazine",
+      "lastModified": "1660000000",
+      "date": "2020-07-09"
+    }
+  ],
+  ":type": "sheet"
+}

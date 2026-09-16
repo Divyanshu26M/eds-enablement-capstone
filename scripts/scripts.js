@@ -143,6 +143,32 @@ function decorateButtons(main) {
 }
 
 /**
+ * Applies section-metadata blocks as classes/styles on their section, then
+ * removes the block so it does not render as visible content. Mirrors the
+ * standard EDS behaviour that this vendored aem.js omits.
+ * @param {Element} main The main container element
+ */
+function decorateSectionMetadata(main) {
+  main.querySelectorAll(':scope > div > .section-metadata').forEach((meta) => {
+    const section = meta.parentElement;
+    [...meta.children].forEach((row) => {
+      const cols = [...row.children];
+      if (cols.length < 2) return;
+      const key = cols[0].textContent.trim().toLowerCase();
+      const value = cols[1].textContent.trim();
+      if (key === 'style') {
+        value.split(',').map((s) => s.trim()).filter(Boolean).forEach((s) => {
+          section.classList.add(s.replace(/\s+/g, '-').toLowerCase());
+        });
+      } else {
+        section.dataset[key] = value;
+      }
+    });
+    meta.remove();
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -150,6 +176,7 @@ function decorateButtons(main) {
 export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
+  decorateSectionMetadata(main);
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);

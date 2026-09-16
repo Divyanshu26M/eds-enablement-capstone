@@ -1,0 +1,17 @@
+{
+  "variantName": "breadcrumbs",
+  "baseBlock": "breadcrumbs",
+  "canonicalModel": "standalone",
+  "visualCharacteristics": {},
+  "contentPattern": {},
+  "usage": {
+    "pagesUsing": [
+      "/us/en/magazine/arctic-surfing",
+      "/us/en/adventures/bali-surf-camp"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-09-16T14:47:00.000000Z"
+  },
+  "options": [],
+  "memberVariantIds": []
+}
