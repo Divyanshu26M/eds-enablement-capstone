@@ -73,11 +73,17 @@ function buildCard(item, cta) {
     } catch { /* keep false */ }
     if (sameOrigin) {
       // EDS media on our own origin: use responsive optimized picture
-      imgWrap.append(createOptimizedPicture(item.image, item.title || '', false, [{ width: '750' }]));
+      const pic = createOptimizedPicture(item.image, item.title || '', false, [{ width: '750' }]);
+      const pImg = pic.querySelector('img');
+      if (pImg) { pImg.width = 750; pImg.height = 500; }
+      imgWrap.append(pic);
     } else {
       // external image (e.g. still-remote source media): plain img, no EDS optimize params
       const img = document.createElement('img');
       img.loading = 'lazy';
+      // explicit intrinsic dimensions reserve layout space (avoids CLS)
+      img.width = 750;
+      img.height = 500;
       img.src = item.image;
       img.alt = item.title || '';
       imgWrap.append(img);

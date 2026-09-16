@@ -143,6 +143,14 @@ export default async function decorate(block) {
   container.append(slidesWrapper);
   block.prepend(container);
 
+  // The first slide's image is the likely LCP element — load it eagerly with
+  // high priority instead of lazily (the default from createOptimizedPicture).
+  const firstImg = slidesWrapper.querySelector('.carousel-slide img');
+  if (firstImg) {
+    firstImg.setAttribute('loading', 'eager');
+    firstImg.setAttribute('fetchpriority', 'high');
+  }
+
   if (!isSingleSlide) {
     bindEvents(block);
   }
