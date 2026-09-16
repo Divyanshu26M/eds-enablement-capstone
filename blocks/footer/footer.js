@@ -1,14 +1,18 @@
 /**
- * Fetch the footer fragment. Metadata-independent dual-fetch:
- *  1. /content/footer.plain.html  (localhost / aem up)
- *  2. /footer.plain.html          (DA/EDS production — fragment at site root)
+ * Fetch the footer fragment. On DA/EDS hosts the fragment is served at the
+ * site root (`/footer.plain.html`); local `aem up` serves it under `/content/`.
+ * Pick the primary path by host to avoid a spurious 404 in the console, with
+ * the other as a fallback.
  */
 async function fetchFooter() {
-  let resp = await fetch('/content/footer.plain.html');
-  let prefix = '/content/';
+  const onAemHost = /\.aem\.(page|live)$/.test(window.location.hostname);
+  const primary = onAemHost ? '/footer.plain.html' : '/content/footer.plain.html';
+  const fallback = onAemHost ? '/content/footer.plain.html' : '/footer.plain.html';
+  let resp = await fetch(primary);
+  let prefix = onAemHost ? '/' : '/content/';
   if (!resp.ok) {
-    resp = await fetch('/footer.plain.html');
-    prefix = '/';
+    resp = await fetch(fallback);
+    prefix = onAemHost ? '/content/' : '/';
   }
   if (!resp.ok) return null;
   const html = await resp.text();
@@ -38,6 +42,15 @@ export default async function decorate(block) {
   classes.forEach((c, i) => {
     const section = footer.children[i];
     if (section) section.classList.add(`footer-${c}`);
+  });
+
+  // Give footer images explicit intrinsic dimensions so the browser reserves
+  // layout space (CSS still controls their rendered size). Avoids CLS + a11y flag.
+  footer.querySelectorAll('img').forEach((img) => {
+    if (img.getAttribute('width')) return;
+    const isLogo = /wknd-logo/.test(img.getAttribute('src') || '');
+    img.setAttribute('width', isLogo ? '239' : '24');
+    img.setAttribute('height', isLogo ? '89' : '24');
   });
 
   // Tag the social icon links so CSS can style the icon buttons

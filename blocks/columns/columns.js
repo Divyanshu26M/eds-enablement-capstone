@@ -12,6 +12,17 @@ export default function decorate(block) {
           // picture is only content in column
           picWrapper.classList.add('columns-img-col');
         }
+        // Reserve layout space: give the img explicit dimensions if it lacks
+        // them, deriving the ratio from the source URL's width/height params
+        // when present (EDS media) so we avoid CLS and the a11y unsized flag.
+        const img = pic.querySelector('img');
+        if (img && !img.getAttribute('width')) {
+          const src = img.getAttribute('src') || '';
+          const w = src.match(/[?&]width=(\d+)/);
+          const h = src.match(/[?&]height=(\d+)/);
+          img.setAttribute('width', w ? w[1] : '750');
+          img.setAttribute('height', h ? h[1] : '500');
+        }
       }
     });
   });
