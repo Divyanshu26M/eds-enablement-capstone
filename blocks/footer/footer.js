@@ -44,6 +44,18 @@ export default async function decorate(block) {
     if (section) section.classList.add(`footer-${c}`);
   });
 
+  // Promote footer section headings to h2 so the document outline never skips
+  // a level (the footer follows main content that may end at h2 or h3). Keep the
+  // original visual size via a heading-size class so appearance is unchanged.
+  footer.querySelectorAll('h3, h4, h5, h6').forEach((h) => {
+    const level = h.tagName[1];
+    const h2 = document.createElement('h2');
+    [...h.attributes].forEach((attr) => h2.setAttribute(attr.name, attr.value));
+    h2.classList.add(`heading-size-h${level}`);
+    h2.append(...h.childNodes);
+    h.replaceWith(h2);
+  });
+
   // Give footer images explicit intrinsic dimensions so the browser reserves
   // layout space (CSS still controls their rendered size). Avoids CLS + a11y flag.
   footer.querySelectorAll('img').forEach((img) => {

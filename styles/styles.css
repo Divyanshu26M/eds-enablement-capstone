@@ -135,6 +135,25 @@ h6 {
 h5 { font-size: var(--heading-font-size-s); }
 h6 { font-size: var(--heading-font-size-xs); }
 
+/* Heading-order normalizer (scripts.js) demotes level-skipping headings to the
+   correct semantic level; these classes preserve the original visual size so the
+   demotion is invisible to users. Mirror the h1–h6 rules above exactly. */
+.heading-size-h1 { font-size: var(--heading-font-size-xxl); }
+.heading-size-h2 { font-size: var(--heading-font-size-xl); }
+.heading-size-h3 { font-size: var(--heading-font-size-l); }
+.heading-size-h4 { font-size: var(--heading-font-size-m); }
+
+.heading-size-h5,
+.heading-size-h6 {
+  font-family: var(--body-font-family);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.heading-size-h5 { font-size: var(--heading-font-size-s); }
+.heading-size-h6 { font-size: var(--heading-font-size-xs); }
+
 p,
 dl,
 ol,

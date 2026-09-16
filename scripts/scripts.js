@@ -169,6 +169,41 @@ function decorateSectionMetadata(main) {
 }
 
 /**
+ * Fixes heading-order accessibility issues by demoting headings that skip a
+ * level (e.g. an h1 followed directly by an h4). Imported content and some
+ * blocks author headings by visual size rather than document outline, which
+ * fails the axe `heading-order` rule. We rewrite the tag to the correct level
+ * and carry the original size across with a `heading-size-hN` class so the
+ * change is purely semantic and invisible to users.
+ * @param {Element} main The main container element
+ */
+function fixHeadingOrder(main) {
+  // Empty headings (common in imported content) are ignored by assistive tech
+  // when computing outline order and fail the `empty-heading` rule — drop them.
+  main.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((h) => {
+    if (!h.textContent.trim() && !h.querySelector('img, picture, svg')) h.remove();
+  });
+  const headings = [...main.querySelectorAll('h1, h2, h3, h4, h5, h6')];
+  let prevLevel = 0;
+  headings.forEach((h) => {
+    const level = Number(h.tagName[1]);
+    // the deepest level allowed here is one below the previous heading
+    const maxLevel = prevLevel === 0 ? 1 : prevLevel + 1;
+    const target = level > maxLevel ? maxLevel : level;
+    if (target !== level) {
+      const replacement = document.createElement(`h${target}`);
+      [...h.attributes].forEach((attr) => replacement.setAttribute(attr.name, attr.value));
+      replacement.classList.add(`heading-size-h${level}`);
+      replacement.append(...h.childNodes);
+      h.replaceWith(replacement);
+      prevLevel = target;
+    } else {
+      prevLevel = level;
+    }
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -180,6 +215,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  fixHeadingOrder(main);
 }
 
 /**

@@ -22,7 +22,7 @@
   display: block;
 }
 
-.listing .listing-card-body h3 {
+.listing .listing-card-body h2 {
   margin: 12px 0 6px;
   font-size: var(--body-font-size-xs);
   text-transform: uppercase;
@@ -47,7 +47,7 @@
   border-bottom: 2px solid var(--accent-color);
 }
 
-.listing .listing-card-link:hover .listing-card-body h3 {
+.listing .listing-card-link:hover .listing-card-body h2 {
   text-decoration: underline;
 }
 
