@@ -156,7 +156,7 @@ header nav .nav-utility .nav-locale-list {
   display: none;
 }
 
-header nav .nav-utility[aria-expanded='true'] .nav-locale-list {
+header nav .nav-utility[data-expanded='true'] .nav-locale-list {
   display: block;
   position: absolute;
   z-index: 4;
@@ -167,7 +167,7 @@ header nav .nav-utility[aria-expanded='true'] .nav-locale-list {
   min-width: 220px;
 }
 
-header nav .nav-utility[aria-expanded='true'] .nav-locale-list a {
+header nav .nav-utility[data-expanded='true'] .nav-locale-list a {
   color: var(--footer-text-color);
   display: block;
   padding: 6px 0;

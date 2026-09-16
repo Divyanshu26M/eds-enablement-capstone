@@ -2,17 +2,20 @@
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
 /**
- * Fetch the nav fragment. Metadata-independent dual-fetch:
- *  1. /content/nav.plain.html  (localhost / aem up)
- *  2. /nav.plain.html          (DA/EDS production — fragment at site root)
+ * Fetch the nav fragment. On DA/EDS hosts the fragment is served at the site
+ * root (`/nav.plain.html`); local `aem up` serves it under `/content/`.
+ * Choose the primary path by host so we don't log a 404 for the wrong one,
+ * and keep the other as a metadata-independent fallback.
  */
 async function fetchNav() {
-  const base = '/content/nav.plain.html';
-  let resp = await fetch(base);
-  let prefix = '/content/';
+  const onAemHost = /\.aem\.(page|live)$/.test(window.location.hostname);
+  const primary = onAemHost ? '/nav.plain.html' : '/content/nav.plain.html';
+  const fallback = onAemHost ? '/content/nav.plain.html' : '/nav.plain.html';
+  let resp = await fetch(primary);
+  let prefix = onAemHost ? '/' : '/content/';
   if (!resp.ok) {
-    resp = await fetch('/nav.plain.html');
-    prefix = '/';
+    resp = await fetch(fallback);
+    prefix = onAemHost ? '/content/' : '/';
   }
   if (!resp.ok) return null;
   const html = await resp.text();
@@ -69,16 +72,22 @@ function decorateLocale(section) {
   const wrapper = trigger.closest('p');
   wrapper.classList.add('nav-locale-trigger');
   list.classList.add('nav-locale-list');
+  // aria-expanded belongs on the interactive trigger, not the plain container.
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.setAttribute('aria-haspopup', 'true');
+  const setOpen = (open) => {
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    section.dataset.expanded = open ? 'true' : 'false';
+  };
   // stop the trigger link from navigating; it only toggles the list
   trigger.addEventListener('click', (e) => {
     e.preventDefault();
-    const open = section.getAttribute('aria-expanded') === 'true';
-    section.setAttribute('aria-expanded', open ? 'false' : 'true');
+    setOpen(trigger.getAttribute('aria-expanded') !== 'true');
   });
-  section.setAttribute('aria-expanded', 'false');
+  setOpen(false);
   // close when clicking outside
   document.addEventListener('click', (e) => {
-    if (!section.contains(e.target)) section.setAttribute('aria-expanded', 'false');
+    if (!section.contains(e.target)) setOpen(false);
   });
 }
 
@@ -125,6 +134,13 @@ export default async function decorate(block) {
       brandLink.className = '';
       const bc = brandLink.closest('.button-container');
       if (bc) bc.className = '';
+    }
+    // Give the logo explicit intrinsic dimensions so the browser reserves
+    // layout space (CSS still sizes it to 128px wide). Avoids CLS + a11y flag.
+    const brandImg = navBrand.querySelector('img');
+    if (brandImg && !brandImg.getAttribute('width')) {
+      brandImg.setAttribute('width', '239');
+      brandImg.setAttribute('height', '89');
     }
   }
 
