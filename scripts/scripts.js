@@ -204,6 +204,38 @@ function fixHeadingOrder(main) {
 }
 
 /**
+ * Gives content images meaningful alt text when the source left it empty.
+ * Much of the imported WKND content carries `alt=""` on inline article/adventure
+ * photos (the source authored them that way) and the AEM image filenames are
+ * generic (`image.coreimg.jpeg`), so the only meaningful signal is page context.
+ * We derive alt from the image's nearest preceding heading, falling back to the
+ * page title — so a photo under "Ski Touring" becomes alt="Ski Touring". Images
+ * that already have non-empty alt, and icons/SVGs, are left untouched.
+ * @param {Element} main The main container element
+ */
+function improveImageAltText(main) {
+  const pageTitle = (document.querySelector('meta[property="og:title"]')?.content
+    || document.title || '').trim();
+  main.querySelectorAll('img').forEach((img) => {
+    const alt = (img.getAttribute('alt') || '').trim();
+    if (alt) return; // author-provided alt wins
+    // find the nearest heading that appears before this image in document order
+    const headings = [...main.querySelectorAll('h1, h2, h3, h4, h5, h6')];
+    let label = '';
+    for (let i = headings.length - 1; i >= 0; i -= 1) {
+      const h = headings[i];
+      // eslint-disable-next-line no-bitwise
+      if (h.compareDocumentPosition(img) & Node.DOCUMENT_POSITION_FOLLOWING) {
+        label = h.textContent.trim();
+        break;
+      }
+    }
+    if (!label) label = pageTitle;
+    if (label) img.setAttribute('alt', label);
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -216,6 +248,7 @@ export function decorateMain(main) {
   decorateBlocks(main);
   decorateButtons(main);
   fixHeadingOrder(main);
+  improveImageAltText(main);
 }
 
 /**
