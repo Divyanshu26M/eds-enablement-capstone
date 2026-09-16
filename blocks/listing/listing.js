@@ -93,7 +93,10 @@ function buildCard(item, cta) {
 
   const body = document.createElement('div');
   body.className = 'listing-card-body';
-  const title = document.createElement('h3');
+  // h2 keeps the outline valid whether the listing sits under the page h1
+  // (magazine/adventures) or an h2 section heading (home); its size is set by
+  // the class-scoped CSS rule, so appearance is unchanged.
+  const title = document.createElement('h2');
   title.textContent = item.title || '';
   body.append(title);
   if (item.description) {

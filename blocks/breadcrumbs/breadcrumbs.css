@@ -37,5 +37,6 @@
 }
 
 .breadcrumbs .breadcrumbs-current {
-  color: #888;
+  /* #6f6f6f keeps ~4.9:1 on white — passes WCAG AA (4.5:1) */
+  color: #6f6f6f;
 }

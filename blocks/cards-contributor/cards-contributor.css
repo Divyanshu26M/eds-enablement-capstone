@@ -24,7 +24,7 @@
 
 .cards-contributor .cards-contributor-body h5 {
   margin: 0 0 12px;
-  color: #888;
+  color: #6f6f6f; /* ~4.9:1 on white — passes WCAG AA (4.5:1) */
 }
 
 .cards-contributor .cards-contributor-body p a img {
