@@ -76,20 +76,24 @@
 }
 
 .carousel .carousel-slide-indicator button {
-  width: 12px;
-  height: 12px;
+  width: 24px;
+  height: 24px;
   margin: 0;
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background-color: #dadada;
+  background-color: transparent;
+  cursor: pointer;
   transition: background-color 0.2s;
+
+  /* small visible dot, full 24px hit area for accessible tap targets */
+  background-image: radial-gradient(circle, #dadada 0 6px, transparent 6px);
 }
 
 .carousel .carousel-slide-indicator button:disabled,
 .carousel .carousel-slide-indicator button:hover,
 .carousel .carousel-slide-indicator button:focus-visible {
-  background-color: var(--text-color);
+  background-image: radial-gradient(circle, var(--text-color) 0 6px, transparent 6px);
 }
 
 .carousel .carousel-navigation-buttons {
