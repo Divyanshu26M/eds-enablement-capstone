@@ -264,14 +264,27 @@ header nav .nav-search input::placeholder {
       'brand sections' 116px / auto 1fr;
     gap: 0;
     max-width: calc(var(--content-max-width) + 24px);
-    padding: 24px 0;
+    padding: 0 0 24px; /* no top padding: utility row sits flush in the band */
     min-height: auto;
     overflow: visible;
   }
 
-  /* utility bar spans full width, dark background, aligned right */
+  /* utility bar: full-viewport-width black band behind the top row. The band
+     is painted by a pseudo-element on the sticky wrapper so it bleeds past the
+     centered nav's max-width, while the utility content stays within the grid. */
   header .nav-wrapper {
     position: relative;
+  }
+
+  header .nav-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-utility-height, 37px);
+    background-color: var(--dark-color);
+    z-index: 0;
   }
 
   header nav .nav-hamburger {
@@ -282,7 +295,17 @@ header nav .nav-search input::placeholder {
   header nav .nav-utility {
     grid-area: utility;
     justify-content: flex-end;
-    padding: 8px 0;
+    align-items: center;
+    height: var(--nav-utility-height, 37px);
+    padding: 0;
+    position: relative;
+    z-index: 1;
+    color: var(--footer-text-color);
+  }
+
+  /* light text on the dark band (locale trigger + sign-in) */
+  header nav .nav-utility p a {
+    color: var(--footer-text-color);
   }
 
   /* main sections row: nav links grouped center-right, search at the far right */
