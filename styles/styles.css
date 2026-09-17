@@ -164,6 +164,38 @@ blockquote {
   margin-bottom: 0.8em;
 }
 
+/* Default-content pull-quote (article bodies author a bare <blockquote>, not a
+   .quote block). Larger serif type, offset, with a yellow accent rule. */
+main .default-content-wrapper blockquote {
+  margin: 32px 0;
+  padding: 8px 0 8px 28px;
+  border-left: 4px solid var(--accent-color);
+  font-family: var(--heading-font-family);
+  font-size: 155%;
+  line-height: 1.35;
+  color: var(--text-color);
+}
+
+main .default-content-wrapper blockquote p {
+  margin: 0;
+}
+
+/* Article byline ("By <author>") — small understated subtitle under the title,
+   not a full heading. */
+main .default-content-wrapper .article-byline {
+  margin: 4px 0 24px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 400;
+  color: #6f6f6f;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+main .default-content-wrapper .article-byline::after {
+  content: none;
+}
+
 code,
 pre {
   font-size: var(--body-font-size-s);
