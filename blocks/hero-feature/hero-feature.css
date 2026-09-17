@@ -25,6 +25,12 @@
   margin: 0 auto;
   padding: 24px;
   background-color: transparent;
+  text-align: center;
+}
+
+/* center the CTA button (inline-flex ignores text-align on its own) */
+.hero-feature.hero .hero-content .button-wrapper {
+  text-align: center;
 }
 
 @media (width >= 900px) {
