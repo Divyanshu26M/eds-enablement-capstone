@@ -270,12 +270,10 @@ header nav .nav-search input::placeholder {
   }
 
   /* utility bar: full-viewport-width black band behind the top row. The band
-     is painted by a pseudo-element on the sticky wrapper so it bleeds past the
-     centered nav's max-width, while the utility content stays within the grid. */
-  header .nav-wrapper {
-    position: relative;
-  }
-
+     is painted by a pseudo-element on the wrapper so it bleeds past the centered
+     nav's max-width. The wrapper keeps position: sticky (from the base rule) —
+     sticky is itself a containing block for the absolute ::before, so we must
+     NOT override it to relative here or the header stops sticking on desktop. */
   header .nav-wrapper::before {
     content: '';
     position: absolute;

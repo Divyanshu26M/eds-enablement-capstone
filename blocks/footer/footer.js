@@ -18,9 +18,23 @@ async function fetchFooter() {
   const html = await resp.text();
   const container = document.createElement('div');
   container.innerHTML = html;
-  // Resolve relative image paths against the fragment root (nested pages).
-  container.querySelectorAll('img[src^="images/"]').forEach((img) => {
-    img.src = `${prefix}${img.getAttribute('src')}`;
+  // Resolve relative image paths against the fragment root. The footer fragment
+  // lives at the site root, but its images are authored relative — either
+  // `images/…` (our committed assets) or DA-localized `./media_….svg` hashes.
+  // On a nested page (e.g. /us/en/magazine/arctic-surfing) a relative src would
+  // resolve against the page path and 404, so rewrite both to the fragment root.
+  container.querySelectorAll('img[src]').forEach((img) => {
+    const src = img.getAttribute('src');
+    if (/^(https?:)?\/\//.test(src) || src.startsWith('/')) return; // already absolute
+    const clean = src.replace(/^\.\//, ''); // drop leading ./
+    img.src = `${prefix}${clean}`;
+    const source = img.closest('picture')?.querySelector('source[srcset]');
+    if (source) {
+      const ss = source.getAttribute('srcset');
+      if (ss && !/^(https?:)?\/\//.test(ss) && !ss.startsWith('/')) {
+        source.setAttribute('srcset', `${prefix}${ss.replace(/^\.\//, '')}`);
+      }
+    }
   });
   return container;
 }
