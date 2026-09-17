@@ -48,7 +48,11 @@ export default async function decorate(block) {
   block.textContent = '';
   if (!fragment) return;
 
-  const footer = document.createElement('div');
+  // The block element itself carries the `.footer` grid CSS. Append the three
+  // fragment sections DIRECTLY to it — an extra inner wrapper <div> made the
+  // sections grandchildren of `.footer`, so the grid-template-areas couldn't
+  // place them and the footer stacked instead of laying out in a row.
+  const footer = block;
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
   // Map the three fragment sections: brand, social, legal
@@ -86,6 +90,5 @@ export default async function decorate(block) {
       if (a.querySelector('img')) a.classList.add('social-icon');
     });
   }
-
-  block.append(footer);
+  // sections were appended straight onto `block` (= footer), nothing more to add.
 }
