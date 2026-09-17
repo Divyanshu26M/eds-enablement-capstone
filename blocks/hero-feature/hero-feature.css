@@ -1,1 +1,34 @@
 @import url('../hero/hero.css');
+
+/* hero-feature (WKND "Next Adventures"): unlike the base hero overlay, the
+   image is a full-width banner on top and the text/CTA sit below it on white. */
+.hero-feature.hero {
+  display: block;
+  min-height: 0;
+  padding: 0;
+}
+
+.hero-feature.hero picture {
+  position: static;
+  z-index: auto;
+  display: block;
+}
+
+.hero-feature.hero img {
+  width: 100%;
+  height: clamp(220px, 40vw, 460px);
+  object-fit: cover;
+}
+
+.hero-feature.hero .hero-content {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 24px;
+  background-color: transparent;
+}
+
+@media (width >= 900px) {
+  .hero-feature.hero .hero-content {
+    padding: 32px;
+  }
+}
