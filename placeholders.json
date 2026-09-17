@@ -1,0 +1,13 @@
+{
+  "total": 5,
+  "offset": 0,
+  "limit": 5,
+  "data": [
+    { "Key": "search", "Text": "Search" },
+    { "Key": "previousSlide", "Text": "Previous Slide" },
+    { "Key": "nextSlide", "Text": "Next Slide" },
+    { "Key": "carouselControls", "Text": "Carousel Slide Controls" },
+    { "Key": "signIn", "Text": "Sign In" }
+  ],
+  ":type": "sheet"
+}

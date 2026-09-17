@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-relative-packages
+import { fetchPlaceholders } from '../../scripts/scripts.js';
+
 function updateActiveSlide(slide) {
   const block = slide.closest('.carousel');
   const slideIndex = parseInt(slide.dataset.slideIndex, 10);
@@ -93,6 +96,7 @@ function createSlide(row, slideIndex, carouselId) {
 let carouselId = 0;
 export default async function decorate(block) {
   carouselId += 1;
+  const ph = await fetchPlaceholders();
   block.setAttribute('id', `carousel-${carouselId}`);
   const rows = block.querySelectorAll(':scope > div');
   const isSingleSlide = rows.length < 2;
@@ -110,7 +114,7 @@ export default async function decorate(block) {
   let slideIndicators;
   if (!isSingleSlide) {
     const slideIndicatorsNav = document.createElement('nav');
-    slideIndicatorsNav.setAttribute('aria-label', 'Carousel Slide Controls');
+    slideIndicatorsNav.setAttribute('aria-label', ph.carouselControls || 'Carousel Slide Controls');
     slideIndicators = document.createElement('ol');
     slideIndicators.classList.add('carousel-slide-indicators');
     slideIndicatorsNav.append(slideIndicators);
@@ -119,8 +123,8 @@ export default async function decorate(block) {
     const slideNavButtons = document.createElement('div');
     slideNavButtons.classList.add('carousel-navigation-buttons');
     slideNavButtons.innerHTML = `
-      <button type="button" class= "slide-prev" aria-label="${'Previous Slide'}"></button>
-      <button type="button" class="slide-next" aria-label="${'Next Slide'}"></button>
+      <button type="button" class="slide-prev" aria-label="${ph.previousSlide || 'Previous Slide'}"></button>
+      <button type="button" class="slide-next" aria-label="${ph.nextSlide || 'Next Slide'}"></button>
     `;
 
     container.append(slideNavButtons);
