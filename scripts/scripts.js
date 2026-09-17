@@ -290,6 +290,27 @@ function decorateSocialLinks(main) {
 }
 
 /**
+ * Tidies the article-detail header. The imported source emits, right after the
+ * H1 title: a "By <author>" heading and then a second heading that repeats the
+ * title verbatim. WKND shows the title once with a small byline. We detect the
+ * "By …" byline, tag it for small styling, and drop the duplicate title that
+ * immediately follows it.
+ * @param {Element} main The main container element
+ */
+function decorateArticleHeader(main) {
+  const h1 = main.querySelector('.default-content-wrapper h1');
+  if (!h1) return;
+  const byline = h1.nextElementSibling;
+  if (!byline || !/^by\s+/i.test(byline.textContent.trim())) return;
+  byline.classList.add('article-byline');
+  const dup = byline.nextElementSibling;
+  if (dup && /^h[1-6]$/i.test(dup.tagName)
+      && dup.textContent.trim() === h1.textContent.trim()) {
+    dup.remove();
+  }
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -302,6 +323,7 @@ export function decorateMain(main) {
   decorateBlocks(main);
   decorateSocialLinks(main);
   decorateButtons(main);
+  decorateArticleHeader(main);
   fixHeadingOrder(main);
   improveImageAltText(main);
 }
