@@ -371,6 +371,44 @@ function decorateAuthorBio(main) {
 }
 
 /**
+ * Adventure-detail two-column: WKND puts the trip metadata + "Share this
+ * Adventure" in a LEFT rail beside the Overview/Itinerary tabbed content. The
+ * import emits everything in one section: breadcrumb, carousel, h1 (stay
+ * full-width on top), then a metadata <dl>, the "Share this Adventure" heading,
+ * and a tabs block. We wrap the dl + share heading into a left rail and the
+ * tabs into the right main column. No-op when there's no metadata dl + tabs.
+ * @param {Element} main The main container element
+ */
+function decorateAdventureLayout(main) {
+  const dl = main.querySelector('.section .columns-metadata, .section dl');
+  const tabs = main.querySelector('.section .tabs, .section .tabs-minimal-light, .section .tabs-minimal-dark-withimg-4');
+  if (!dl || !tabs) return;
+  const dlWrapper = dl.closest('.section > div');
+  const tabsWrapper = tabs.closest('.section > div');
+  if (!dlWrapper || !tabsWrapper || dlWrapper.closest('.adventure-columns')) return;
+  const section = dlWrapper.closest('.section');
+  if (section !== tabsWrapper.closest('.section')) return;
+
+  const grid = document.createElement('div');
+  grid.className = 'adventure-columns';
+  const rail = document.createElement('div');
+  rail.className = 'adventure-columns-rail';
+  const mainCol = document.createElement('div');
+  mainCol.className = 'adventure-columns-main';
+  // rail = the dl wrapper through the tabs wrapper's previous sibling
+  // (captures the "Share this Adventure" heading wrapper in between).
+  section.insertBefore(grid, dlWrapper);
+  let node = dlWrapper;
+  while (node && node !== tabsWrapper) {
+    const next = node.nextElementSibling;
+    rail.append(node);
+    node = next;
+  }
+  mainCol.append(tabsWrapper);
+  grid.append(rail, mainCol);
+}
+
+/**
  * Two-column body+rail layout for the article ("Share this story" related rail)
  * and adventure detail ("Share this adventure" metadata rail). The rail lives in
  * its own <section>, following the section that holds the main body. We build a
@@ -419,6 +457,7 @@ export function decorateMain(main) {
   decorateArticleHeader(main);
   decorateAuthorBio(main);
   decorateFaqLayout(main);
+  decorateAdventureLayout(main);
   decorateSidebarLayout(main);
   fixHeadingOrder(main);
   improveImageAltText(main);

@@ -479,3 +479,25 @@ main .content-columns > div {
     padding: 0;
   }
 }
+
+/* Adventure detail: metadata + share rail (left) beside the tabbed content
+   (right), built by decorateAdventureLayout. Stacks on mobile. */
+main .adventure-columns > div {
+  min-width: 0;
+}
+
+@media (width >= 900px) {
+  main .adventure-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+    gap: 48px;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 32px;
+    align-items: start;
+  }
+
+  main .adventure-columns > div {
+    padding: 0;
+  }
+}
