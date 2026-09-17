@@ -27,9 +27,23 @@
   color: #6f6f6f; /* ~4.9:1 on white — passes WCAG AA (4.5:1) */
 }
 
-.cards-contributor .cards-contributor-body p a img {
+.cards-contributor .cards-contributor-body .social-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 8px 0 0;
+}
+
+.cards-contributor .cards-contributor-body .social-icon img {
   width: 20px;
   height: 20px;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.cards-contributor .cards-contributor-body .social-icon:hover img,
+.cards-contributor .cards-contributor-body .social-icon:focus-visible img {
+  opacity: 1;
 }
 
 @media (width >= 600px) {
