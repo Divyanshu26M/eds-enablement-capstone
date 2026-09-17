@@ -1,9 +1,9 @@
 /* Full-bleed hero: break out of the section's centered content-width box so the
    carousel spans the whole viewport (matches the source hero on all breakpoints).
-   The block's section wrapper adds side padding + max-width; cancel both. Covers
-   the base `carousel` and the `carousel-hero` variant wrapper classes. */
-.carousel-wrapper,
-.carousel-hero-wrapper {
+   Must out-specify `main > .section > div` (0,1,2) which sets the content-width
+   max-width + padding on this same wrapper — so scope under main > .section. */
+main > .section > .carousel-wrapper,
+main > .section > .carousel-hero-wrapper {
   max-width: none;
   padding: 0;
 }
