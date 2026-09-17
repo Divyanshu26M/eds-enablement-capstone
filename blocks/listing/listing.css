@@ -9,8 +9,14 @@
   padding: 0;
 }
 
+.listing .listing-grid > li {
+  display: flex;
+}
+
 .listing .listing-card-link {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   color: var(--text-color);
   text-decoration: none;
 }
@@ -33,8 +39,17 @@
 
 .listing .listing-card-body p {
   margin: 0;
-  font-size: var(--body-font-size-s);
+  font-size: var(--body-font-size-xs);
+  line-height: 1.4;
   color: #444;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+
+  /* clamp to 3 lines so every card is a uniform height */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .listing .listing-card-cta {
