@@ -333,6 +333,14 @@ main > .section > div > h3::after {
   border-bottom: 2px solid var(--accent-color);
 }
 
+/* Section separator before the footer: WKND closes the last content section
+   with a thin rule above the dark footer. A top border on the last light
+   section gives that divider without an authored <hr>. */
+main > .section:last-child:not(.dark, .highlight) {
+  border-top: 1px solid var(--medium-color);
+  padding-top: 40px;
+}
+
 /* section metadata / background variants */
 main .section.light,
 main .section.grey {
