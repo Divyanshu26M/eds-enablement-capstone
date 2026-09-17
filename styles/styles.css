@@ -415,6 +415,10 @@ main a.social-icon img {
   height: 24px;
   opacity: 0.7;
   transition: opacity 0.2s;
+
+  /* the shared social SVGs are white-filled (for the dark footer); on the
+     white page body they'd be invisible, so recolor them to the text color. */
+  filter: brightness(0);
 }
 
 main a.social-icon:hover img,
