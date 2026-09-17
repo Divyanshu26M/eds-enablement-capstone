@@ -332,6 +332,116 @@ function decorateFaqLayout(main) {
 }
 
 /**
+ * Article author bio: the source emits, at the foot of the article, a lone
+ * author photo (a <p> whose only child is a picture) followed by the author
+ * name heading, role, and social icons. Rendered as-is the photo is a huge
+ * full-width image. WKND shows a compact avatar beside the name/role/socials.
+ * Wrap the photo + following author block into `.author-bio` (styled: small
+ * round avatar left, text right) so it reads like WKND's byline card.
+ * @param {Element} main The main container element
+ */
+function decorateAuthorBio(main) {
+  main.querySelectorAll('.default-content-wrapper').forEach((wrapper) => {
+    const pics = [...wrapper.children].filter((el) => el.tagName === 'P'
+      && el.children.length === 1 && el.querySelector(':scope > picture'));
+    pics.forEach((photoP) => {
+      const heading = photoP.nextElementSibling;
+      // author block = photo immediately followed by a heading whose next
+      // siblings include a social-links row (marks it as an author card).
+      if (!heading || !/^h[1-6]$/i.test(heading.tagName)) return;
+      let scan = heading.nextElementSibling;
+      let hasSocial = false;
+      const members = [heading];
+      while (scan && scan.tagName !== 'HR' && !/^h[1-2]$/i.test(scan.tagName)) {
+        if (scan.classList.contains('social-links')) hasSocial = true;
+        members.push(scan);
+        scan = scan.nextElementSibling;
+      }
+      if (!hasSocial) return;
+      const bio = document.createElement('div');
+      bio.className = 'author-bio';
+      const textCol = document.createElement('div');
+      textCol.className = 'author-bio-text';
+      photoP.classList.add('author-bio-photo');
+      photoP.replaceWith(bio);
+      bio.append(photoP, textCol);
+      members.forEach((m) => textCol.append(m));
+    });
+  });
+}
+
+/**
+ * Adventure-detail two-column: WKND puts the trip metadata + "Share this
+ * Adventure" in a LEFT rail beside the Overview/Itinerary tabbed content. The
+ * import emits everything in one section: breadcrumb, carousel, h1 (stay
+ * full-width on top), then a metadata <dl>, the "Share this Adventure" heading,
+ * and a tabs block. We wrap the dl + share heading into a left rail and the
+ * tabs into the right main column. No-op when there's no metadata dl + tabs.
+ * @param {Element} main The main container element
+ */
+function decorateAdventureLayout(main) {
+  const dl = main.querySelector('.section .columns-metadata, .section dl');
+  const tabs = main.querySelector('.section .tabs, .section .tabs-minimal-light, .section .tabs-minimal-dark-withimg-4');
+  if (!dl || !tabs) return;
+  const dlWrapper = dl.closest('.section > div');
+  const tabsWrapper = tabs.closest('.section > div');
+  if (!dlWrapper || !tabsWrapper || dlWrapper.closest('.adventure-columns')) return;
+  const section = dlWrapper.closest('.section');
+  if (section !== tabsWrapper.closest('.section')) return;
+
+  const grid = document.createElement('div');
+  grid.className = 'adventure-columns';
+  const rail = document.createElement('div');
+  rail.className = 'adventure-columns-rail';
+  const mainCol = document.createElement('div');
+  mainCol.className = 'adventure-columns-main';
+  // rail = the dl wrapper through the tabs wrapper's previous sibling
+  // (captures the "Share this Adventure" heading wrapper in between).
+  section.insertBefore(grid, dlWrapper);
+  let node = dlWrapper;
+  while (node && node !== tabsWrapper) {
+    const next = node.nextElementSibling;
+    rail.append(node);
+    node = next;
+  }
+  mainCol.append(tabsWrapper);
+  grid.append(rail, mainCol);
+}
+
+/**
+ * Two-column body+rail layout for the article ("Share this story" related rail)
+ * and adventure detail ("Share this adventure" metadata rail). The rail lives in
+ * its own <section>, following the section that holds the main body. We build a
+ * `.content-columns` grid that spans BOTH: the main body section's content on
+ * the left, the rail section's content on the right. Runs after decorateSections
+ * (so `.section` wrappers exist); idempotent and a no-op when the rail is absent.
+ * @param {Element} main The main container element
+ */
+function decorateSidebarLayout(main) {
+  const RAIL_RE = /^(share this story|share this adventure)$/i;
+  const railSection = [...main.querySelectorAll(':scope > .section')].find((sec) => {
+    if (sec.querySelector('.content-columns')) return false;
+    const h = sec.querySelector('h1, h2, h3, h4, h5, h6');
+    return h && RAIL_RE.test(h.textContent.trim());
+  });
+  if (!railSection) return;
+  const bodySection = railSection.previousElementSibling;
+  if (!bodySection || !bodySection.classList.contains('section')) return;
+
+  const grid = document.createElement('div');
+  grid.className = 'content-columns';
+  const mainCol = document.createElement('div');
+  mainCol.className = 'content-columns-main';
+  const railCol = document.createElement('div');
+  railCol.className = 'content-columns-rail';
+  while (bodySection.firstElementChild) mainCol.append(bodySection.firstElementChild);
+  while (railSection.firstElementChild) railCol.append(railSection.firstElementChild);
+  grid.append(mainCol, railCol);
+  bodySection.append(grid);
+  railSection.remove();
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -345,7 +455,10 @@ export function decorateMain(main) {
   decorateSocialLinks(main);
   decorateButtons(main);
   decorateArticleHeader(main);
+  decorateAuthorBio(main);
   decorateFaqLayout(main);
+  decorateAdventureLayout(main);
+  decorateSidebarLayout(main);
   fixHeadingOrder(main);
   improveImageAltText(main);
 }
