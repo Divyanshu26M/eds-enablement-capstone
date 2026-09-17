@@ -17,7 +17,9 @@ indices:
     exclude:
       - '/us/en/adventures'      # listing page itself
       - '/us/en/magazine'        # listing page itself
-    target: /us/en/query-index.json
+    # Root path — must match blocks/listing/listing.js `source` default
+    # (config.source || '/query-index.json').
+    target: /query-index.json
     properties:
       title:
         select: head > meta[property="og:title"]
@@ -46,10 +48,22 @@ indices:
 
 Each indexed page must carry the properties above in its metadata (the import
 adds a Metadata block → `<head>` tags): `title`, `image`, `description`,
-`template`, `category`, and (for articles) `publication-date`.
+`template`, `category`. `publication-date` is optional — where it is absent the
+listing block falls back to the indexer's `lastModified` (page last-modified
+epoch) for `sort: date`, so listings still order newest-first without it.
 
-## Local development
+## Sorting
 
-A committed seed `query-index.json` (site root) lets the dynamic listing block
-render on `aem up` before content is published. Once pages are published to DA,
-the indexer regenerates the live `query-index.json`; the seed can then be removed.
+`blocks/listing/listing.js` sorts `sort: date` newest-first by a real numeric
+timestamp: it prefers an ISO `date` (from `publication-date`) and falls back to
+`lastModified × 1000`. Because `lastModified` is a genuine per-page epoch from
+the indexer, a newly published article sorts above older ones and reaches the
+home rail's `limit: 4` with no code change.
+
+## No committed seed
+
+There is intentionally **no** committed `query-index.json`. A static seed at the
+site root is served as a code asset and silently overrides the indexer's output,
+so it is removed and `.hlxignore`d. The live `query-index.json` is produced
+entirely by the indexer from published pages, per the config above — register it
+at **tools.aem.live → index-admin** for this site, then publish/reindex.

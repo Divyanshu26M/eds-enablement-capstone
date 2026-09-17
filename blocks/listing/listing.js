@@ -46,10 +46,24 @@ function matchItem(item, config) {
   return true;
 }
 
+/*
+ * Resolve a comparable timestamp (ms) for an index row. The EDS indexer emits
+ * `lastModified` as an epoch in SECONDS; `date` (when present) is an ISO string.
+ * Prefer an explicit `date`, else fall back to `lastModified`. Returns 0 when
+ * neither is usable so undated rows sort last.
+ */
+function itemTime(item) {
+  const d = item.date && Date.parse(item.date);
+  if (d) return d;
+  const lm = Number(item.lastModified);
+  return Number.isFinite(lm) && lm > 0 ? lm * 1000 : 0;
+}
+
 function sortItems(items, sort) {
   const list = [...items];
   if (sort === 'date') {
-    list.sort((a, b) => String(b.date || b.lastModified || '').localeCompare(String(a.date || a.lastModified || '')));
+    // newest first, by real timestamp (numeric) — not a string compare
+    list.sort((a, b) => itemTime(b) - itemTime(a));
   } else if (sort === 'title') {
     list.sort((a, b) => String(a.title || '').localeCompare(String(b.title || '')));
   }
