@@ -371,39 +371,36 @@ function decorateAuthorBio(main) {
 }
 
 /**
- * Wrap a single-section page that has a "sidebar" default-content wrapper into
- * a two-column grid — used by the article (main body + "Share this story"
- * related rail) and the adventure detail (metadata + share rail beside the
- * tabbed content). We detect the rail by a heading matching a known label and
- * move it into a right column; everything before it becomes the main column.
+ * Two-column body+rail layout for the article ("Share this story" related rail)
+ * and adventure detail ("Share this adventure" metadata rail). The rail lives in
+ * its own <section>, following the section that holds the main body. We build a
+ * `.content-columns` grid that spans BOTH: the main body section's content on
+ * the left, the rail section's content on the right. Runs after decorateSections
+ * (so `.section` wrappers exist); idempotent and a no-op when the rail is absent.
  * @param {Element} main The main container element
  */
 function decorateSidebarLayout(main) {
   const RAIL_RE = /^(share this story|share this adventure)$/i;
-  main.querySelectorAll('.default-content-wrapper').forEach((wrapper) => {
-    if (wrapper.closest('.content-columns')) return;
-    const heading = [...wrapper.children].find((el) => /^h[1-6]$/i.test(el.tagName)
-      && RAIL_RE.test(el.textContent.trim()));
-    if (!heading) return;
-    const section = wrapper.closest('.section');
-    if (!section || section.querySelector('.content-columns')) return;
-    const grid = document.createElement('div');
-    grid.className = 'content-columns';
-    const mainCol = document.createElement('div');
-    mainCol.className = 'content-columns-main';
-    const railCol = document.createElement('div');
-    railCol.className = 'content-columns-rail';
-    // everything in the section wrapper list before this wrapper → main col;
-    // the rail wrapper (and anything after) → rail col.
-    const wrappers = [...section.children];
-    const idx = wrappers.indexOf(wrapper);
-    section.insertBefore(grid, wrappers[0]);
-    wrappers.forEach((w, i) => {
-      if (w === grid) return;
-      (i < idx ? mainCol : railCol).append(w);
-    });
-    grid.append(mainCol, railCol);
+  const railSection = [...main.querySelectorAll(':scope > .section')].find((sec) => {
+    if (sec.querySelector('.content-columns')) return false;
+    const h = sec.querySelector('h1, h2, h3, h4, h5, h6');
+    return h && RAIL_RE.test(h.textContent.trim());
   });
+  if (!railSection) return;
+  const bodySection = railSection.previousElementSibling;
+  if (!bodySection || !bodySection.classList.contains('section')) return;
+
+  const grid = document.createElement('div');
+  grid.className = 'content-columns';
+  const mainCol = document.createElement('div');
+  mainCol.className = 'content-columns-main';
+  const railCol = document.createElement('div');
+  railCol.className = 'content-columns-rail';
+  while (bodySection.firstElementChild) mainCol.append(bodySection.firstElementChild);
+  while (railSection.firstElementChild) railCol.append(railSection.firstElementChild);
+  grid.append(mainCol, railCol);
+  bodySection.append(grid);
+  railSection.remove();
 }
 
 /**
