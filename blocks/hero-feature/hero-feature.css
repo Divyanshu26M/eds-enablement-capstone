@@ -1,5 +1,15 @@
 @import url('../hero/hero.css');
 
+/* Full-bleed: break the hero-feature out of the section's centered content box
+   so its banner spans the viewport (like the carousel hero). Must out-specify
+   `main > .section > div` (0,1,2), which sets the 1140px max-width + padding on
+   .hero-feature-wrapper. The inner .hero-content keeps its own max-width so the
+   text/CTA stay centered within the content width. */
+main > .section > .hero-feature-wrapper {
+  max-width: none;
+  padding: 0;
+}
+
 /* hero-feature (WKND "Next Adventures"): unlike the base hero overlay, the
    image is a full-width banner on top and the text/CTA sit below it on white. */
 .hero-feature.hero {
