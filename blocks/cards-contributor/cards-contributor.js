@@ -11,7 +11,11 @@ export default function decorate(block) {
     li.className = 'cards-contributor-card';
     while (row.firstElementChild) {
       const cell = row.firstElementChild;
-      if (cell.querySelector('picture, img')) {
+      // The photo cell is a <picture>; the body cell holds name/role/socials.
+      // Match on <picture> only — social links are decorated into bare <img>
+      // icons before this block runs, so a plain `img` test would misclassify
+      // the body cell as the image cell (and blow the icons up to photo size).
+      if (cell.querySelector('picture')) {
         cell.className = 'cards-contributor-image';
       } else {
         cell.className = 'cards-contributor-body';

@@ -34,15 +34,20 @@
   margin: 8px 0 0;
 }
 
-.cards-contributor .cards-contributor-body .social-icon img {
+/* Scope to .social-icon (not just -body) so the icons stay small even if the
+   photo cell is misclassified; also recolor the white-filled SVGs to dark. */
+.cards-contributor .social-icon img {
   width: 20px;
   height: 20px;
+  border-radius: 0;
+  object-fit: contain;
   opacity: 0.75;
   transition: opacity 0.2s;
+  filter: brightness(0);
 }
 
-.cards-contributor .cards-contributor-body .social-icon:hover img,
-.cards-contributor .cards-contributor-body .social-icon:focus-visible img {
+.cards-contributor .social-icon:hover img,
+.cards-contributor .social-icon:focus-visible img {
   opacity: 1;
 }
 

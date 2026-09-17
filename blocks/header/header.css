@@ -8,11 +8,20 @@ header:has(.nav-wrapper) {
   height: auto;
 }
 
+/* Sticky must sit on the top-level <header> (a direct child of <body>): a
+   sticky element only sticks within its parent's box, and the inner
+   .nav-wrapper's parent (.header.block) is only as tall as the header itself,
+   so making the wrapper sticky lets it scroll away. Stick the header instead. */
+header.header-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
 header .nav-wrapper {
   width: 100%;
   z-index: 3;
-  position: sticky;
-  top: 0;
+  position: relative; /* containing block for the desktop utility ::before band */
   background-color: var(--background-color);
   border-bottom: 1px solid var(--medium-color);
 }
@@ -269,11 +278,9 @@ header nav .nav-search input::placeholder {
     overflow: visible;
   }
 
-  /* utility bar: full-viewport-width black band behind the top row. The band
-     is painted by a pseudo-element on the wrapper so it bleeds past the centered
-     nav's max-width. The wrapper keeps position: sticky (from the base rule) —
-     sticky is itself a containing block for the absolute ::before, so we must
-     NOT override it to relative here or the header stops sticking on desktop. */
+  /* utility bar: full-viewport-width black band behind the top row, painted by
+     a pseudo-element on the (position:relative) wrapper so it bleeds past the
+     centered nav's max-width. Sticky lives on the top-level <header>, not here. */
   header .nav-wrapper::before {
     content: '';
     position: absolute;
