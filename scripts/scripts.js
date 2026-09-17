@@ -9,8 +9,28 @@ import {
   loadSection,
   loadSections,
   loadCSS,
-  buildBlock,
 } from './aem.js';
+
+/**
+ * Fetch authorable UI strings from /placeholders.json (the standard EDS
+ * placeholders sheet: rows of Key | Text). Cached after first load. Returns an
+ * object keyed by the sheet's Key column; callers use getPlaceholder() with a
+ * built-in default so labels degrade gracefully if the sheet is missing.
+ * The vendored aem.js does not export fetchPlaceholders, so we provide our own.
+ */
+let placeholdersPromise;
+export async function fetchPlaceholders() {
+  if (!placeholdersPromise) {
+    placeholdersPromise = fetch(`${window.hlx.codeBasePath}/placeholders.json`)
+      .then((resp) => (resp.ok ? resp.json() : { data: [] }))
+      .then((json) => (json.data || []).reduce((acc, row) => {
+        if (row.Key) acc[row.Key] = row.Text;
+        return acc;
+      }, {}))
+      .catch(() => ({}));
+  }
+  return placeholdersPromise;
+}
 
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
   const innerTT = window.trustedTypes.createPolicy('tt-inner', {
@@ -50,30 +70,6 @@ async function loadFonts() {
 }
 
 /**
- * Turns `/widgets/...` links into widget blocks.
- * @param {Element} main The container element
- */
-function buildWidgetAutoBlocks(main) {
-  const widgetLinks = [...main.querySelectorAll('a[href*="/widgets/"]')];
-  widgetLinks.forEach((link) => {
-    if (link.closest('.widget')) return;
-    const newLink = link.cloneNode(true);
-    const widgetBlock = buildBlock('widget', { elems: [newLink] });
-    const p = link.closest('p');
-    if (
-      p
-      && p.querySelectorAll('a').length === 1
-      && p.querySelector('a') === link
-      && p.textContent.trim() === link.textContent.trim()
-    ) {
-      p.replaceWith(widgetBlock);
-    } else {
-      link.replaceWith(widgetBlock);
-    }
-  });
-}
-
-/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -96,7 +92,6 @@ function buildAutoBlocks(main) {
         });
       });
     }
-    buildWidgetAutoBlocks(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -381,7 +376,7 @@ function decorateAuthorBio(main) {
  */
 function decorateAdventureLayout(main) {
   const dl = main.querySelector('.section .columns-metadata, .section dl');
-  const tabs = main.querySelector('.section .tabs, .section .tabs-minimal-light, .section .tabs-minimal-dark-withimg-4');
+  const tabs = main.querySelector('.section .tabs, .section .tabs-minimal-light');
   if (!dl || !tabs) return;
   const dlWrapper = dl.closest('.section > div');
   const tabsWrapper = tabs.closest('.section > div');
@@ -525,7 +520,22 @@ function loadDelayed() {
   // load anything that can be postponed to the latest here
 }
 
+/**
+ * The site's front door is /us/en; the bare domain and /index otherwise land on
+ * leftover boilerplate. Redirect them before anything renders (the vendored
+ * aem.js has no redirects.json support). location.replace keeps history clean.
+ */
+function redirectFrontDoor() {
+  const { pathname } = window.location;
+  if (pathname === '/' || pathname === '/index') {
+    window.location.replace('/us/en');
+    return true;
+  }
+  return false;
+}
+
 async function loadPage() {
+  if (redirectFrontDoor()) return;
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();

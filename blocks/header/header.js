@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-relative-packages
+import { fetchPlaceholders } from '../../scripts/scripts.js';
+
 // media query match that indicates desktop width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
@@ -46,8 +49,10 @@ function toggleMenu(nav, forceExpanded = null) {
 
 /**
  * Build the search form (form controls are created in JS, not in the fragment).
+ * The label is authorable via placeholders.json (key: search).
  */
-function buildSearch() {
+function buildSearch(placeholders = {}) {
+  const label = placeholders.search || 'Search';
   const form = document.createElement('form');
   form.className = 'nav-search';
   form.setAttribute('role', 'search');
@@ -55,8 +60,8 @@ function buildSearch() {
   const input = document.createElement('input');
   input.type = 'search';
   input.name = 'q';
-  input.placeholder = 'Search';
-  input.setAttribute('aria-label', 'Search');
+  input.placeholder = label;
+  input.setAttribute('aria-label', label);
   form.append(input);
   return form;
 }
@@ -107,7 +112,7 @@ function handleBreakpointChange(nav) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  const fragment = await fetchNav();
+  const [fragment, placeholders] = await Promise.all([fetchNav(), fetchPlaceholders()]);
   block.textContent = '';
   if (!fragment) return;
 
@@ -154,7 +159,7 @@ export default async function decorate(block) {
       // the top-level label ("Home") may be a bare <a> or wrapped in a <p>
       topList.querySelectorAll(':scope > li > a, :scope > li > p > a').forEach((a) => a.classList.add('nav-trigger'));
     }
-    navSections.prepend(buildSearch());
+    navSections.prepend(buildSearch(placeholders));
   }
 
   // Hamburger for mobile

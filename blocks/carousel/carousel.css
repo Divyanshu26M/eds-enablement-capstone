@@ -1,3 +1,12 @@
+/* Full-bleed hero: break out of the section's centered content-width box so the
+   carousel spans the whole viewport (matches the source hero on all breakpoints).
+   The section wrapper adds side padding + max-width; cancel both here. */
+.carousel-wrapper,
+.carousel-container > div {
+  max-width: none;
+  padding: 0;
+}
+
 .carousel {
   position: relative;
 }
