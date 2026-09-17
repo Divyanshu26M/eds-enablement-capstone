@@ -357,3 +357,27 @@ main .section.dark h5,
 main .section.dark h6 {
   color: #fff;
 }
+
+/* Social links (author bios etc.) converted to icon buttons by scripts.js.
+   Blocks may override; this covers default-content contexts. */
+main .social-links {
+  display: flex;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+main a.social-icon {
+  display: inline-flex;
+}
+
+main a.social-icon img {
+  width: 24px;
+  height: 24px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+main a.social-icon:hover img,
+main a.social-icon:focus-visible img {
+  opacity: 1;
+}

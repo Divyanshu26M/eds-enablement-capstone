@@ -241,6 +241,55 @@ function improveImageAltText(main) {
 }
 
 /**
+ * Turns social links (author bios, contributor cards) into icon buttons.
+ * The source authors these as text links — "Facebook", "Twitter Social Media",
+ * href="#facebook-…" — so on their own they render as plain links (or, after
+ * decorateButtons, as yellow buttons). WKND shows them as small monochrome
+ * social glyphs. We detect the platform from the href or text, swap the label
+ * for the matching /icons/social-*.svg, and tag the link so decorateButtons
+ * leaves it alone. Any paragraph that ends up holding only social icons is
+ * marked `.social-links` for horizontal layout.
+ * @param {Element} main The main container element
+ */
+const SOCIAL_PLATFORMS = ['facebook', 'twitter', 'instagram'];
+function decorateSocialLinks(main) {
+  main.querySelectorAll('a[href]').forEach((a) => {
+    const haystack = `${a.getAttribute('href')} ${a.textContent}`.toLowerCase();
+    const platform = SOCIAL_PLATFORMS.find((p) => haystack.includes(p));
+    // only convert when it's clearly just a social link (short label, no image)
+    if (!platform || a.querySelector('img')) return;
+    if (a.textContent.trim().length > 24) return;
+    const label = platform.charAt(0).toUpperCase() + platform.slice(1);
+    a.textContent = '';
+    a.setAttribute('aria-label', label);
+    a.classList.add('social-icon');
+    a.dataset.socialIcon = platform;
+    const img = document.createElement('img');
+    img.src = `${window.hlx.codeBasePath}/icons/social-${platform}.svg`;
+    img.alt = label;
+    img.width = 24;
+    img.height = 24;
+    img.loading = 'lazy';
+    a.append(img);
+    const p = a.closest('p');
+    if (p) p.classList.add('social-links');
+  });
+
+  // The source sometimes puts each social link in its own <p> (article author
+  // bios). Merge runs of adjacent social-link paragraphs into one so the icons
+  // sit on a single row.
+  main.querySelectorAll('p.social-links').forEach((p) => {
+    let next = p.nextElementSibling;
+    while (next && next.tagName === 'P' && next.classList.contains('social-links')) {
+      const following = next.nextElementSibling;
+      while (next.firstChild) p.append(next.firstChild);
+      next.remove();
+      next = following;
+    }
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -251,6 +300,7 @@ export function decorateMain(main) {
   decorateSectionMetadata(main);
   decorateSections(main);
   decorateBlocks(main);
+  decorateSocialLinks(main);
   decorateButtons(main);
   fixHeadingOrder(main);
   improveImageAltText(main);
