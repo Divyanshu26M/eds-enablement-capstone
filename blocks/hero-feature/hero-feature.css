@@ -3,21 +3,24 @@
 /* Full-bleed: break the hero-feature out of the section's centered content box
    so its banner spans the viewport (like the carousel hero). Must out-specify
    `main > .section > div` (0,1,2), which sets the 1140px max-width + padding on
-   .hero-feature-wrapper. The inner .hero-content keeps its own max-width so the
-   text/CTA stay centered within the content width. */
+   .hero-feature-wrapper. */
 main > .section > .hero-feature-wrapper {
   max-width: none;
   padding: 0;
 }
 
-/* hero-feature (WKND "Next Adventures"): unlike the base hero overlay, the
-   image is a full-width banner on top and the text/CTA sit below it on white. */
+/* hero-feature (WKND "Next Adventures"/teaser): a full-width image banner with a
+   white content card that overlaps the bottom of the image — the card is
+   horizontally centered and overhangs the banner's lower edge (same mechanism as
+   the carousel hero card). Mobile stacks the card below the image. */
 .hero-feature.hero {
   display: block;
+  position: relative;
   min-height: 0;
   padding: 0;
 }
 
+.hero-feature.hero .hero-image,
 .hero-feature.hero picture {
   position: static;
   z-index: auto;
@@ -25,24 +28,38 @@ main > .section > .hero-feature-wrapper {
 }
 
 .hero-feature.hero img {
+  display: block;
   width: 100%;
   height: clamp(220px, 40vw, 460px);
   object-fit: cover;
 }
 
-/* WKND: text is LEFT-aligned inside a content-width block that is itself
-   centered in the viewport (max-width + margin auto) — same mechanism as the
-   hero card. Not center-aligned text. */
+/* Mobile-first: card sits below the banner on white, text left-aligned. */
 .hero-feature.hero .hero-content {
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: 24px;
-  background-color: transparent;
+  background-color: var(--background-color);
   text-align: left;
 }
 
 @media (width >= 900px) {
+  /* reserve a white strip below the banner for the card's overhang */
+  .hero-feature.hero {
+    padding-bottom: 64px;
+  }
+
+  /* WKND: the white card is a content-width box centered horizontally over the
+     full-bleed image, overhanging its bottom edge. Text stays left-aligned. */
   .hero-feature.hero .hero-content {
-    padding: 32px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    z-index: 1;
+    width: min(78vw, 1192px);
+    max-width: calc(100% - 96px);
+    margin: 0;
+    padding: 36px 40px 40px;
   }
 }
