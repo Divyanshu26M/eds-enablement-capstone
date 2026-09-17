@@ -30,17 +30,15 @@ main > .section > .hero-feature-wrapper {
   object-fit: cover;
 }
 
+/* WKND: text is LEFT-aligned inside a content-width block that is itself
+   centered in the viewport (max-width + margin auto) — same mechanism as the
+   hero card. Not center-aligned text. */
 .hero-feature.hero .hero-content {
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: 24px;
   background-color: transparent;
-  text-align: center;
-}
-
-/* center the CTA button (inline-flex ignores text-align on its own) */
-.hero-feature.hero .hero-content .button-wrapper {
-  text-align: center;
+  text-align: left;
 }
 
 @media (width >= 900px) {
