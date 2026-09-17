@@ -121,10 +121,13 @@ function decorateButtons(main) {
       if (new URL(a.href).href === new URL(text, window.location).href) return;
     } catch { /* continue */ }
 
-    // require authored formatting for buttonization
+    // Any paragraph that is a single, solo call-to-action link becomes a
+    // button (matches standard EDS + WKND, whose CTAs are plain <a> with no
+    // strong/em). Authored formatting still selects the variant:
+    //   strong+em → accent, strong → primary, em → secondary,
+    //   plain link → primary (WKND yellow), the site default.
     const strong = a.closest('strong');
     const em = a.closest('em');
-    if (!strong && !em) return;
 
     p.className = 'button-wrapper';
     a.className = 'button';
@@ -135,9 +138,11 @@ function decorateButtons(main) {
     } else if (strong) {
       a.classList.add('primary');
       strong.replaceWith(a);
-    } else {
+    } else if (em) {
       a.classList.add('secondary');
       em.replaceWith(a);
+    } else {
+      a.classList.add('primary');
     }
   });
 }
