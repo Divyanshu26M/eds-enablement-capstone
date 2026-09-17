@@ -311,6 +311,27 @@ function decorateArticleHeader(main) {
 }
 
 /**
+ * FAQ page: place the accordion and the "Need more help?" block side by side on
+ * desktop (accordion left, help rail right), matching WKND. The section holds an
+ * `.accordion-faq-wrapper` followed by a default-content wrapper whose heading is
+ * "Need more help?"; we wrap that pair in a `.faq-columns` grid. Idempotent and a
+ * no-op on pages without that structure.
+ * @param {Element} main The main container element
+ */
+function decorateFaqLayout(main) {
+  const accWrapper = main.querySelector('.accordion-faq-wrapper');
+  if (!accWrapper || accWrapper.closest('.faq-columns')) return;
+  const helper = accWrapper.nextElementSibling;
+  if (!helper) return;
+  const heading = helper.querySelector('h1, h2, h3, h4, h5, h6');
+  if (!heading || !/need more help/i.test(heading.textContent)) return;
+  const grid = document.createElement('div');
+  grid.className = 'faq-columns';
+  accWrapper.replaceWith(grid);
+  grid.append(accWrapper, helper);
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -324,6 +345,7 @@ export function decorateMain(main) {
   decorateSocialLinks(main);
   decorateButtons(main);
   decorateArticleHeader(main);
+  decorateFaqLayout(main);
   fixHeadingOrder(main);
   improveImageAltText(main);
 }
