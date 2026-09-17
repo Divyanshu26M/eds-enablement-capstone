@@ -63,11 +63,17 @@ main > .section > .carousel-hero-wrapper {
   background-color: var(--background-color);
   padding: 24px;
   max-width: 100%;
+  text-align: center;
 }
 
 .carousel .carousel-slide .carousel-slide-content h1,
 .carousel .carousel-slide .carousel-slide-content h2 {
   margin-top: 0;
+}
+
+/* button is inline-flex, so centering the text alone leaves it left; center it */
+.carousel .carousel-slide .carousel-slide-content .button-wrapper {
+  text-align: center;
 }
 
 /* ---------- slide indicators (dots) ---------- */
