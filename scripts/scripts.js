@@ -332,6 +332,81 @@ function decorateFaqLayout(main) {
 }
 
 /**
+ * Article author bio: the source emits, at the foot of the article, a lone
+ * author photo (a <p> whose only child is a picture) followed by the author
+ * name heading, role, and social icons. Rendered as-is the photo is a huge
+ * full-width image. WKND shows a compact avatar beside the name/role/socials.
+ * Wrap the photo + following author block into `.author-bio` (styled: small
+ * round avatar left, text right) so it reads like WKND's byline card.
+ * @param {Element} main The main container element
+ */
+function decorateAuthorBio(main) {
+  main.querySelectorAll('.default-content-wrapper').forEach((wrapper) => {
+    const pics = [...wrapper.children].filter((el) => el.tagName === 'P'
+      && el.children.length === 1 && el.querySelector(':scope > picture'));
+    pics.forEach((photoP) => {
+      const heading = photoP.nextElementSibling;
+      // author block = photo immediately followed by a heading whose next
+      // siblings include a social-links row (marks it as an author card).
+      if (!heading || !/^h[1-6]$/i.test(heading.tagName)) return;
+      let scan = heading.nextElementSibling;
+      let hasSocial = false;
+      const members = [heading];
+      while (scan && scan.tagName !== 'HR' && !/^h[1-2]$/i.test(scan.tagName)) {
+        if (scan.classList.contains('social-links')) hasSocial = true;
+        members.push(scan);
+        scan = scan.nextElementSibling;
+      }
+      if (!hasSocial) return;
+      const bio = document.createElement('div');
+      bio.className = 'author-bio';
+      const textCol = document.createElement('div');
+      textCol.className = 'author-bio-text';
+      photoP.classList.add('author-bio-photo');
+      photoP.replaceWith(bio);
+      bio.append(photoP, textCol);
+      members.forEach((m) => textCol.append(m));
+    });
+  });
+}
+
+/**
+ * Wrap a single-section page that has a "sidebar" default-content wrapper into
+ * a two-column grid — used by the article (main body + "Share this story"
+ * related rail) and the adventure detail (metadata + share rail beside the
+ * tabbed content). We detect the rail by a heading matching a known label and
+ * move it into a right column; everything before it becomes the main column.
+ * @param {Element} main The main container element
+ */
+function decorateSidebarLayout(main) {
+  const RAIL_RE = /^(share this story|share this adventure)$/i;
+  main.querySelectorAll('.default-content-wrapper').forEach((wrapper) => {
+    if (wrapper.closest('.content-columns')) return;
+    const heading = [...wrapper.children].find((el) => /^h[1-6]$/i.test(el.tagName)
+      && RAIL_RE.test(el.textContent.trim()));
+    if (!heading) return;
+    const section = wrapper.closest('.section');
+    if (!section || section.querySelector('.content-columns')) return;
+    const grid = document.createElement('div');
+    grid.className = 'content-columns';
+    const mainCol = document.createElement('div');
+    mainCol.className = 'content-columns-main';
+    const railCol = document.createElement('div');
+    railCol.className = 'content-columns-rail';
+    // everything in the section wrapper list before this wrapper → main col;
+    // the rail wrapper (and anything after) → rail col.
+    const wrappers = [...section.children];
+    const idx = wrappers.indexOf(wrapper);
+    section.insertBefore(grid, wrappers[0]);
+    wrappers.forEach((w, i) => {
+      if (w === grid) return;
+      (i < idx ? mainCol : railCol).append(w);
+    });
+    grid.append(mainCol, railCol);
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -345,7 +420,9 @@ export function decorateMain(main) {
   decorateSocialLinks(main);
   decorateButtons(main);
   decorateArticleHeader(main);
+  decorateAuthorBio(main);
   decorateFaqLayout(main);
+  decorateSidebarLayout(main);
   fixHeadingOrder(main);
   improveImageAltText(main);
 }

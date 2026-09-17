@@ -348,14 +348,16 @@ main > .section:first-of-type {
 
 /*
  * WKND section-title accent: 84px x 2px yellow underline beneath section
- * headings. Applied to h2/h3 that act as section titles (direct children of
- * a section's default-content wrapper).
+ * headings and page-title H1s (direct children of a section's default-content
+ * wrapper). The carousel/hero H1 is nested inside its block, so it's excluded.
  */
+main > .section > div > h1,
 main > .section > div > h2,
 main > .section > div > h3 {
   padding-bottom: 16px;
 }
 
+main > .section > div > h1::after,
 main > .section > div > h2::after,
 main > .section > div > h3::after {
   content: "";
@@ -424,4 +426,56 @@ main a.social-icon img {
 main a.social-icon:hover img,
 main a.social-icon:focus-visible img {
   opacity: 1;
+}
+
+/* Article author bio (built by decorateAuthorBio): small round avatar + text. */
+main .author-bio {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 40px 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--medium-color);
+}
+
+main .author-bio .author-bio-photo {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main .author-bio .author-bio-photo img {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+main .author-bio .author-bio-text > * {
+  margin: 0;
+}
+
+main .author-bio .author-bio-text > .social-links {
+  margin-top: 8px;
+}
+
+/* Two-column content layout (article body + share rail; adventure content +
+   metadata rail), built by decorateSidebarLayout. Stacks on mobile. */
+main .content-columns > div {
+  min-width: 0;
+}
+
+@media (width >= 900px) {
+  main .content-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr);
+    gap: 48px;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  main .content-columns > div {
+    padding: 0;
+  }
 }
