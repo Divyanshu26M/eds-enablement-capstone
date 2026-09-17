@@ -346,7 +346,11 @@ header nav .nav-search input::placeholder {
     width: auto;
   }
 
-  header nav .nav-sections > ul > li > a {
+  /* Hide the top-level "Home" label (the logo is the home link). DA may author
+     it as a bare <a> or wrap it in a <p>, so hide both — but never the nested
+     <ul> that holds the real nav items. */
+  header nav .nav-sections > ul > li > a,
+  header nav .nav-sections > ul > li > p {
     display: none;
   }
 

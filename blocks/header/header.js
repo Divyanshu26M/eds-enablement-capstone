@@ -151,7 +151,8 @@ export default async function decorate(block) {
     const topList = navSections.querySelector(':scope > ul');
     if (topList) {
       topList.classList.add('nav-list');
-      topList.querySelectorAll(':scope > li > a').forEach((a) => a.classList.add('nav-trigger'));
+      // the top-level label ("Home") may be a bare <a> or wrapped in a <p>
+      topList.querySelectorAll(':scope > li > a, :scope > li > p > a').forEach((a) => a.classList.add('nav-trigger'));
     }
     navSections.prepend(buildSearch());
   }
